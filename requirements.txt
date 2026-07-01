@@ -1,0 +1,10 @@
+openai
+python-dotenv
+pydantic
+langgraph
+pandas
+pytest
+fastapi
+uvicorn
+httpx
+gunicorn

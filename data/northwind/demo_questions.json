@@ -1,0 +1,182 @@
+[
+  {
+    "case_id": "northwind_001",
+    "question": "Which product categories have the highest total sales revenue?",
+    "expected_intent": "sales_analysis",
+    "difficulty": "medium"
+  },
+  {
+    "case_id": "northwind_002",
+    "question": "Which customers generated the most revenue?",
+    "expected_intent": "customer_analysis",
+    "difficulty": "medium"
+  },
+  {
+    "case_id": "northwind_003",
+    "question": "Which products generated the highest gross profit after returns?",
+    "expected_intent": "profit_analysis",
+    "difficulty": "hard"
+  },
+  {
+    "case_id": "northwind_004",
+    "question": "How many orders were placed by each customer?",
+    "expected_intent": "customer_analysis",
+    "difficulty": "easy"
+  },
+  {
+    "case_id": "northwind_005",
+    "question": "Which employees handled the highest total order value?",
+    "expected_intent": "employee_performance",
+    "difficulty": "medium"
+  },
+  {
+    "case_id": "northwind_006",
+    "question": "Which employees achieved the highest monthly sales target completion rate?",
+    "expected_intent": "employee_performance",
+    "difficulty": "hard"
+  },
+  {
+    "case_id": "northwind_007",
+    "question": "Which suppliers generated the most product sales revenue?",
+    "expected_intent": "supplier_analysis",
+    "difficulty": "medium"
+  },
+  {
+    "case_id": "northwind_008",
+    "question": "How many products does each supplier provide?",
+    "expected_intent": "supplier_analysis",
+    "difficulty": "easy"
+  },
+  {
+    "case_id": "northwind_009",
+    "question": "What are the monthly gross profit trends?",
+    "expected_intent": "profit_analysis",
+    "difficulty": "hard"
+  },
+  {
+    "case_id": "northwind_010",
+    "question": "How many orders were placed each month?",
+    "expected_intent": "order_trend_analysis",
+    "difficulty": "easy"
+  },
+  {
+    "case_id": "northwind_011",
+    "question": "Which countries generated the most revenue?",
+    "expected_intent": "sales_analysis",
+    "difficulty": "medium"
+  },
+  {
+    "case_id": "northwind_012",
+    "question": "Which cities generated the most orders?",
+    "expected_intent": "customer_analysis",
+    "difficulty": "easy"
+  },
+  {
+    "case_id": "northwind_013",
+    "question": "Which products are at or below their reorder level, and how many units are on order?",
+    "expected_intent": "inventory_analysis",
+    "difficulty": "medium"
+  },
+  {
+    "case_id": "northwind_014",
+    "question": "List products with zero units in stock.",
+    "expected_intent": "inventory_analysis",
+    "difficulty": "easy"
+  },
+  {
+    "case_id": "northwind_015",
+    "question": "What is the average unit price by product category?",
+    "expected_intent": "product_category_analysis",
+    "difficulty": "easy"
+  },
+  {
+    "case_id": "northwind_016",
+    "question": "Which product categories have the most products?",
+    "expected_intent": "product_category_analysis",
+    "difficulty": "easy"
+  },
+  {
+    "case_id": "northwind_017",
+    "question": "Which shippers have the highest on-time delivery rate?",
+    "expected_intent": "shipping_analysis",
+    "difficulty": "medium"
+  },
+  {
+    "case_id": "northwind_018",
+    "question": "Which shippers have the longest average shipping time?",
+    "expected_intent": "shipping_analysis",
+    "difficulty": "medium"
+  },
+  {
+    "case_id": "northwind_019",
+    "question": "Show the top 10 orders by total order value.",
+    "expected_intent": "sales_analysis",
+    "difficulty": "medium"
+  },
+  {
+    "case_id": "northwind_020",
+    "question": "What is the total discount amount by product category?",
+    "expected_intent": "product_category_analysis",
+    "difficulty": "hard"
+  },
+  {
+    "case_id": "northwind_021",
+    "question": "Which customers have the highest average order value?",
+    "expected_intent": "customer_analysis",
+    "difficulty": "hard"
+  },
+  {
+    "case_id": "northwind_022",
+    "question": "How many distinct customers ordered from each country?",
+    "expected_intent": "customer_analysis",
+    "difficulty": "medium"
+  },
+  {
+    "case_id": "northwind_023",
+    "question": "Which employees handled the most orders?",
+    "expected_intent": "employee_performance",
+    "difficulty": "easy"
+  },
+  {
+    "case_id": "northwind_024",
+    "question": "Which product categories have the highest returned quantity?",
+    "expected_intent": "returns_analysis",
+    "difficulty": "medium"
+  },
+  {
+    "case_id": "northwind_025",
+    "question": "Which suppliers provide products with the highest average unit price?",
+    "expected_intent": "supplier_analysis",
+    "difficulty": "medium"
+  },
+  {
+    "case_id": "northwind_026",
+    "question": "List the 10 products with the lowest units in stock.",
+    "expected_intent": "inventory_analysis",
+    "difficulty": "easy"
+  },
+  {
+    "case_id": "northwind_027",
+    "question": "Which products have generated the highest total quantity sold?",
+    "expected_intent": "sales_analysis",
+    "difficulty": "medium"
+  },
+  {
+    "case_id": "northwind_028",
+    "question": "What are the most common return reasons?",
+    "expected_intent": "returns_analysis",
+    "difficulty": "medium"
+  },
+  {
+    "case_id": "northwind_029",
+    "question": "Which ship countries have the most orders?",
+    "expected_intent": "shipping_analysis",
+    "difficulty": "easy"
+  },
+  {
+    "case_id": "northwind_030",
+    "question": "Which months had the highest gross margin?",
+    "expected_intent": "profit_analysis",
+    "difficulty": "hard"
+  }
+]
