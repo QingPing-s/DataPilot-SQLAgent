@@ -1,6 +1,6 @@
 # DataPilot Multi-Agent SQL Analyst
 
-[English README](README.md)
+**简体中文** | [English](README.md)
 
 DataPilot 是一个基于 LangGraph、DeepSeek API 和 SQLite 的多智能体 Text-to-SQL 数据分析系统。系统可以将自然语言问题转换为可执行 SQL，在查询失败时自动修复，解释执行结果，评估回答质量，并记录完整 Agent 执行轨迹。
 
