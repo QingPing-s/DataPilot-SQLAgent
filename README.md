@@ -6,6 +6,8 @@ DataPilot is a multi-agent Text-to-SQL analytics system built with LangGraph, De
 
 **Live demo:** [datapilot-sql-agent.gentlefield-019d4ae8.eastasia.azurecontainerapps.io](https://datapilot-sql-agent.gentlefield-019d4ae8.eastasia.azurecontainerapps.io/)
 
+![DataPilot-SQLAgent 系统架构图](docs/images/DataPilot.png)
+
 ## Features
 
 - Natural-language to SQLite SQL
