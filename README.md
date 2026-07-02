@@ -120,6 +120,20 @@ Cases with missing SQLite files are recorded as failures without stopping the fu
 
 Objective metrics include SQL Valid Rate, Execution Accuracy, Exact Match Rate, Repair Success Rate, and Average Retry Count. Judge metrics include Question-SQL Alignment, Answer Faithfulness, Explanation Quality, Hallucination Rate, and Overall Judge Score.
 
+### Initial Benchmark
+
+On a 50-case Spider Dev subset covering 10 database schemas:
+
+- SQL Valid Rate: **100%**
+- Value-based Execution Accuracy: **92%**
+- Exact Match Rate: **20%**
+- Fallback Rate: **0%**
+- Average latency: **6.91 seconds per case**
+
+No naturally generated SQL failed to execute, so natural Repair Success Rate is **N/A** rather than 0%. A separate deterministic repair stress test injected 10 missing-table errors and 10 syntax errors; **20/20 recovered the correct result within one repair attempt**.
+
+See [the benchmark report](eval/metrics_report.md) for methodology, failure analysis, comparison details, and limitations. This is an engineering benchmark, not a full Spider leaderboard result.
+
 ## Tests
 
 ```bash

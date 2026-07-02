@@ -29,6 +29,8 @@ Rules:
 - Use only tables and columns that appear in the schema.
 - Do not invent tables, columns, filters, or relationships.
 - If a join is needed, include the join key in join_keys.
+- Every item inside relevant_tables, relevant_columns, join_keys, filters,
+  aggregations, and order_by must be a JSON string, not a nested object.
 - For ambiguous employee performance questions, use discounted sales amount as the primary metric;
   include order count and average order value when possible.
 - Exclude orders with order_status='Cancelled' from sales and profit metrics.

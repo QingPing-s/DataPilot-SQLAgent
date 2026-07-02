@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from typing import Any
 
 from pydantic import ValidationError
@@ -15,6 +16,7 @@ def generate_sql_plan(question: str, schema_text: str) -> dict[str, Any]:
     """
     try:
         payload = call_llm_json(build_sql_plan_prompt(question, schema_text))
+        payload = _normalize_plan_payload(payload, question)
         return _model_to_dict(SQLPlan(**payload))
     except ValidationError as exc:
         raise RuntimeError(f"LLM returned invalid SQLPlan JSON: {exc}") from exc
@@ -347,3 +349,31 @@ def _model_to_dict(model: Any) -> dict[str, Any]:
     if hasattr(model, "model_dump"):
         return model.model_dump()
     return model.dict()
+
+
+def _normalize_plan_payload(payload: dict[str, Any], question: str) -> dict[str, Any]:
+    normalized = dict(payload)
+    normalized.setdefault("question", question)
+    normalized.setdefault("reasoning", "")
+
+    list_fields = (
+        "relevant_tables",
+        "relevant_columns",
+        "join_keys",
+        "filters",
+        "aggregations",
+        "order_by",
+    )
+    for field in list_fields:
+        value = normalized.get(field)
+        if value is None:
+            normalized[field] = []
+            continue
+        if not isinstance(value, list):
+            value = [value]
+        normalized[field] = [
+            item if isinstance(item, str) else json.dumps(item, ensure_ascii=False, sort_keys=True)
+            for item in value
+        ]
+
+    return normalized

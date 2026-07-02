@@ -65,11 +65,15 @@ def _run_single_case(case: dict[str, Any]) -> dict[str, Any]:
         "fallback_used": False,
         "error": None,
         "judge_result": None,
+        "skipped": False,
+        "status": "pending",
     }
 
     db_path = case.get("db_path", "")
     if not db_path or not Path(db_path).exists():
         base_result["error"] = f"Database not found: {db_path}"
+        base_result["skipped"] = True
+        base_result["status"] = "skipped"
         return base_result
 
     try:
@@ -98,10 +102,12 @@ def _run_single_case(case: dict[str, Any]) -> dict[str, Any]:
                 "fallback_used": bool(state.get("fallback_used")),
                 "error": verification.get("error") or state.get("error"),
                 "judge_result": state.get("judge_result"),
+                "status": "completed" if not verification.get("error") else "failed",
             }
         )
     except Exception as exc:
         base_result["error"] = str(exc)
+        base_result["status"] = "failed"
 
     return base_result
 

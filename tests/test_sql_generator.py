@@ -26,6 +26,27 @@ def test_generate_sql_plan_validates_llm_json(monkeypatch):
     assert result["relevant_tables"] == ["customers"]
 
 
+def test_generate_sql_plan_normalizes_structured_list_items(monkeypatch):
+    def fake_call_llm_json(messages, temperature=0.2):
+        return {
+            "relevant_tables": ["singer"],
+            "relevant_columns": ["Singer_ID"],
+            "join_keys": [],
+            "filters": [],
+            "aggregations": [{"function": "COUNT", "column": "Singer_ID"}],
+            "order_by": [],
+            "limit": None,
+            "reasoning": "Count singers.",
+        }
+
+    monkeypatch.setattr(sql_generator, "call_llm_json", fake_call_llm_json)
+
+    result = sql_generator.generate_sql_plan("How many singers?", "Table: singer")
+
+    assert result["question"] == "How many singers?"
+    assert result["aggregations"] == ['{"column": "Singer_ID", "function": "COUNT"}']
+
+
 def test_generate_sql_validates_llm_json(monkeypatch):
     def fake_call_llm_json(messages, temperature=0.2):
         return {"sql": "SELECT COUNT(*) AS count FROM customers", "explanation": "Counts customers."}

@@ -2,21 +2,22 @@ from __future__ import annotations
 
 
 def compute_sql_valid_rate(results: list[dict]) -> float:
-    return _mean_bool(result.get("sql_valid") for result in results)
+    return _mean_bool(result.get("sql_valid") for result in _evaluated(results))
 
 
 def compute_execution_accuracy(results: list[dict]) -> float:
-    return _mean_bool(result.get("execution_correct") for result in results)
+    return _mean_bool(result.get("execution_correct") for result in _evaluated(results))
 
 
 def compute_exact_match_rate(results: list[dict]) -> float:
-    return _mean_bool(result.get("exact_match") for result in results)
+    return _mean_bool(result.get("exact_match") for result in _evaluated(results))
 
 
 def compute_repair_success_rate(results: list[dict]) -> float:
     repaired_results = [
         result
         for result in results
+        if not result.get("skipped")
         if result.get("repaired") is True or int(result.get("retry_count") or 0) > 0
     ]
     if not repaired_results:
@@ -25,9 +26,10 @@ def compute_repair_success_rate(results: list[dict]) -> float:
 
 
 def compute_average_retry_count(results: list[dict]) -> float:
-    if not results:
+    evaluated = _evaluated(results)
+    if not evaluated:
         return 0.0
-    return sum(int(result.get("retry_count") or 0) for result in results) / len(results)
+    return sum(int(result.get("retry_count") or 0) for result in evaluated) / len(evaluated)
 
 
 def compute_average_judge_score(results: list[dict]) -> float:
@@ -53,8 +55,11 @@ def compute_hallucination_rate(results: list[dict]) -> float:
 
 
 def summarize_metrics(results: list[dict]) -> dict:
+    evaluated = _evaluated(results)
     return {
         "total_cases": len(results),
+        "evaluated_cases": len(evaluated),
+        "skipped_cases": len(results) - len(evaluated),
         "sql_valid_rate": compute_sql_valid_rate(results),
         "execution_accuracy": compute_execution_accuracy(results),
         "exact_match_rate": compute_exact_match_rate(results),
@@ -80,6 +85,10 @@ def _mean_bool(values) -> float:
     if not values:
         return 0.0
     return sum(bool(value) for value in values) / len(values)
+
+
+def _evaluated(results: list[dict]) -> list[dict]:
+    return [result for result in results if not result.get("skipped")]
 
 
 def _normalize_sql(sql: str) -> str:

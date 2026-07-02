@@ -140,6 +140,7 @@ def evaluation() -> dict[str, Any]:
             else "没有成功完成的评测 Case，请准备 Spider 数据库后重新运行评测。"
         ),
         "metrics": payload.get("metrics") if available else None,
+        "benchmark": payload.get("benchmark") if available else None,
         "total_cases": len(results),
         "completed_cases": len(completed_results),
         "failed_cases": failed_cases[:20],

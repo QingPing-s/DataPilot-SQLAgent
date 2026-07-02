@@ -72,4 +72,7 @@ def test_run_eval_records_missing_database(tmp_path):
     result = run_eval_module.run_eval(str(cases_path), output_dir=str(tmp_path / "eval_out"))
 
     assert result["results"][0]["sql_valid"] is False
+    assert result["results"][0]["skipped"] is True
+    assert result["metrics"]["evaluated_cases"] == 0
+    assert result["metrics"]["skipped_cases"] == 1
     assert "Database not found" in result["results"][0]["error"]

@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import itertools
+import re
+from collections import Counter
 from typing import Any
 
 from src.schemas import VerificationResult
@@ -32,6 +35,41 @@ def compare_execution_results(pred_result: dict[str, Any], gold_result: dict[str
     )
 
 
+def compare_execution_values(pred_result: dict[str, Any], gold_result: dict[str, Any]) -> bool:
+    """
+    Compare result values while ignoring aliases and equivalent column ordering.
+    """
+    if not pred_result.get("success") or not gold_result.get("success"):
+        return False
+
+    pred_columns = pred_result.get("columns", [])
+    gold_columns = gold_result.get("columns", [])
+    if len(pred_columns) != len(gold_columns):
+        return False
+
+    pred_rows = pred_result.get("rows", [])
+    gold_rows = gold_result.get("rows", [])
+    gold_values = [tuple(row.get(column) for column in gold_columns) for row in gold_rows]
+    order_matters = bool(re.search(r"\border\s+by\b", gold_result.get("sql", ""), re.IGNORECASE))
+
+    permutations = (
+        itertools.permutations(range(len(pred_columns)))
+        if len(pred_columns) <= 8
+        else [tuple(range(len(pred_columns)))]
+    )
+    for permutation in permutations:
+        pred_values = [
+            tuple(row.get(pred_columns[index]) for index in permutation)
+            for row in pred_rows
+        ]
+        if order_matters:
+            if pred_values == gold_values:
+                return True
+        elif Counter(pred_values) == Counter(gold_values):
+            return True
+    return False
+
+
 def verify_sql_against_gold(db_path: str, pred_sql: str, gold_sql: str) -> dict[str, Any]:
     """
     Execute predicted and gold SQL, then compare normalized SQL and execution results.
@@ -39,7 +77,8 @@ def verify_sql_against_gold(db_path: str, pred_sql: str, gold_sql: str) -> dict[
     pred_result = execute_sql(db_path, pred_sql)
     gold_result = execute_sql(db_path, gold_sql)
     sql_valid = bool(pred_result.get("success"))
-    execution_correct = compare_execution_results(pred_result, gold_result)
+    strict_execution_match = compare_execution_results(pred_result, gold_result)
+    execution_correct = compare_execution_values(pred_result, gold_result)
 
     error = None
     if pred_result.get("error"):
@@ -50,6 +89,7 @@ def verify_sql_against_gold(db_path: str, pred_sql: str, gold_sql: str) -> dict[
     return {
         "sql_valid": sql_valid,
         "execution_correct": execution_correct,
+        "strict_execution_match": strict_execution_match,
         "exact_match": exact_match_sql(pred_sql, gold_sql),
         "pred_result": pred_result,
         "gold_result": gold_result,

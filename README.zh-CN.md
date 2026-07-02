@@ -120,6 +120,20 @@ python eval/run_eval.py --cases data/spider_subset/eval_cases.json --limit 50
 
 客观指标包括 SQL Valid Rate、Execution Accuracy、Exact Match Rate、Repair Success Rate 和 Average Retry Count。Judge 指标包括 Question-SQL Alignment、Answer Faithfulness、Explanation Quality、Hallucination Rate 和 Overall Judge Score。
 
+### 初始评测结果
+
+在覆盖 10 个数据库 Schema 的 50 条 Spider Dev 子集上：
+
+- SQL Valid Rate：**100%**
+- 基于结果值的 Execution Accuracy：**92%**
+- Exact Match Rate：**20%**
+- Fallback Rate：**0%**
+- 平均延迟：**6.91 秒/Case**
+
+自然生成的 50 条 SQL 均可执行，因此自然 Repair Success Rate 应标记为 **N/A**，而不是 0%。另行执行了确定性修复压力测试：注入 10 个缺失表错误和 10 个语法错误，**20/20 均在一次修复内恢复正确结果**。
+
+详细方法、失败案例、对照结果和限制见[评测报告](eval/metrics_report.md)。该结果属于工程基准测试，不等同于完整 Spider 排行榜成绩。
+
 ## 测试
 
 ```bash

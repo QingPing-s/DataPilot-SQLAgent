@@ -25,6 +25,8 @@ def test_accuracy_empty():
 def test_metrics_empty_results_do_not_error():
     assert summarize_metrics([]) == {
         "total_cases": 0,
+        "evaluated_cases": 0,
+        "skipped_cases": 0,
         "sql_valid_rate": 0.0,
         "execution_accuracy": 0.0,
         "exact_match_rate": 0.0,

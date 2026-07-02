@@ -673,12 +673,17 @@ function getNodeStatus(trace, nodeId) {
 function buildMetricItems(evaluationInfo) {
   if (!evaluationInfo?.available || !evaluationInfo.metrics) return [];
   const metrics = evaluationInfo.metrics;
-  return [
+  const items = [
     ["SQL Valid Rate", metrics.sql_valid_rate, "percent"],
     ["Execution Accuracy", metrics.execution_accuracy, "percent"],
-    ["Repair Success Rate", metrics.repair_success_rate, "percent"],
     ["Judge Score", metrics.average_judge_score, "score"],
-  ].map(([label, rawValue, type]) => {
+  ];
+  if (metrics.repair_stress_success_rate !== null && metrics.repair_stress_success_rate !== undefined) {
+    items.splice(2, 0, ["Repair Stress Success", metrics.repair_stress_success_rate, "percent"]);
+  } else if (metrics.repair_success_rate !== null && metrics.repair_success_rate !== undefined) {
+    items.splice(2, 0, ["Repair Success Rate", metrics.repair_success_rate, "percent"]);
+  }
+  return items.map(([label, rawValue, type]) => {
     const value = Number(rawValue || 0);
     return {
       label,
