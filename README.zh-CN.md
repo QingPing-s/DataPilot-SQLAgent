@@ -6,6 +6,9 @@ DataPilot 是一个基于 LangGraph、DeepSeek API 和 SQLite 的多智能体 Te
 
 **在线演示：** [datapilot-sql-agent.gentlefield-019d4ae8.eastasia.azurecontainerapps.io](https://datapilot-sql-agent.gentlefield-019d4ae8.eastasia.azurecontainerapps.io/)
 
+## 系统架构
+![DataPilot-SQLAgent 系统架构图](docs/images/DataPilot.png)
+
 ## 核心功能
 
 - 自然语言转 SQLite SQL
